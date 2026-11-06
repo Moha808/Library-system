@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@utility text-2xs {
+  font-size: 0.6875rem;
+  line-height: 0.95rem;
+}
+
+@utility text-3xs {
+  font-size: 0.625rem;
+  line-height: 0.85rem;
+}
+
+@layer base {
+  :root {
+    --primary: #15803d;
+    --primary-dark: #14532d;
+  }
+
+  body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.011em;
+  }
+
+  h1, h2, h3, .font-serif-heading {
+    letter-spacing: -0.022em;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Custom print styles for reports */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
