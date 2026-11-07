@@ -11,6 +11,7 @@ import {
   GraduationCap, 
   Building2, 
   ArrowRight,
+  ArrowLeft,
   ShieldCheck,
   Eye,
   EyeOff
@@ -46,7 +47,7 @@ const DEPARTMENTS = [
 ];
 
 export function RegisterPage() {
-  const { register: registerUser } = useAuth();
+  const { register: registerUser, currentUser } = useAuth();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -93,6 +94,16 @@ export function RegisterPage() {
 
   return (
     <div className="min-h-[85vh] flex flex-col justify-center py-10 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-xl mb-3 flex items-center justify-between">
+        <Link
+          to={currentUser ? (currentUser.role === 'admin' ? '/admin' : '/patron') : '/'}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-emerald-400 text-slate-700 hover:text-emerald-800 text-xs font-bold shadow-2xs transition-all hover:bg-emerald-50/50"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 text-emerald-700" />
+          <span>Back to Dashboard</span>
+        </Link>
+      </div>
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="inline-block p-1 rounded-full bg-white shadow-md border-2 border-emerald-600 mb-3">
           <img

@@ -8,6 +8,7 @@ import {
   Lock, 
   Mail, 
   ArrowRight, 
+  ArrowLeft,
   ShieldCheck, 
   Sparkles, 
   GraduationCap,
@@ -23,7 +24,7 @@ const loginSchema = z.object({
 });
 
 export function LoginPage() {
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,6 +69,16 @@ export function LoginPage() {
 
   return (
     <div className="min-h-[80vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md mb-3 flex items-center justify-between">
+        <Link
+          to={currentUser ? (currentUser.role === 'admin' ? '/admin' : '/patron') : '/'}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-emerald-400 text-slate-700 hover:text-emerald-800 text-xs font-bold shadow-2xs transition-all hover:bg-emerald-50/50"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 text-emerald-700" />
+          <span>Back to Dashboard</span>
+        </Link>
+      </div>
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="inline-block p-1 rounded-full bg-white shadow-md border-2 border-emerald-600 mb-3">
           <img

@@ -35,15 +35,20 @@ export function AuthProvider({ children }) {
           try {
             const userDoc = await fetchDocument('users', firebaseUser.uid);
             if (userDoc) {
+              if (userDoc.role === 'admin' && (userDoc.name === 'Jauga Esau' || !userDoc.name || userDoc.name === 'College Librarian')) {
+                userDoc.name = 'Jauga Isuwa Samuel';
+                saveDocument('users', userDoc.id || firebaseUser.uid, userDoc, true);
+              }
               setCurrentUser(userDoc);
               localStorage.setItem('libcredit_current_user', JSON.stringify(userDoc));
             } else {
+              const isAdminEmail = firebaseUser.email.toLowerCase().includes('admin');
               const fallbackUser = {
                 uid: firebaseUser.uid,
                 id: firebaseUser.uid,
                 email: firebaseUser.email,
-                name: firebaseUser.displayName || firebaseUser.email.split('@')[0],
-                role: firebaseUser.email.toLowerCase().includes('admin') ? 'admin' : 'patron',
+                name: isAdminEmail ? 'Jauga Isuwa Samuel' : (firebaseUser.displayName || firebaseUser.email.split('@')[0]),
+                role: isAdminEmail ? 'admin' : 'patron',
                 status: 'active'
               };
               setCurrentUser(fallbackUser);
@@ -134,6 +139,10 @@ export function AuthProvider({ children }) {
         if (userDoc.status === 'suspended') {
           throw new Error('This account has been suspended by library administration.');
         }
+        if (userDoc.role === 'admin' && (userDoc.name === 'Jauga Esau' || !userDoc.name || userDoc.name === 'College Librarian')) {
+          userDoc.name = 'Jauga Isuwa Samuel';
+          saveDocument('users', userDoc.id || cred.user.uid, userDoc, true);
+        }
         setCurrentUser(userDoc);
         localStorage.setItem('libcredit_current_user', JSON.stringify(userDoc));
         return userDoc;
@@ -142,7 +151,7 @@ export function AuthProvider({ children }) {
         const fallbackDoc = {
           id: cred.user.uid,
           uid: cred.user.uid,
-          name: cred.user.displayName || email.split('@')[0],
+          name: isAdminEmail ? 'Jauga Isuwa Samuel' : (cred.user.displayName || email.split('@')[0]),
           email: cred.user.email,
           role: isAdminEmail ? 'admin' : 'patron',
           status: 'active',

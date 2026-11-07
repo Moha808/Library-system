@@ -19,7 +19,7 @@ export function Navbar({ onToggleSidebar, isSidebarOpen }) {
     try {
       await logout();
       toast.success('Signed out successfully');
-      navigate('/login');
+      navigate('/');
     } catch (e) {
       toast.error('Sign out error');
     }

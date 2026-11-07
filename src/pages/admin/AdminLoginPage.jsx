@@ -7,6 +7,7 @@ import {
   Mail, 
   Lock, 
   ArrowRight,
+  ArrowLeft,
   Eye,
   EyeOff
 } from 'lucide-react';
@@ -66,7 +67,10 @@ export function AdminLoginPage() {
         throw new Error('Access denied: this account does not have Librarian Administrative privileges. Please use the Student Patron login.');
       }
 
-      const adminName = existingDoc?.name || cred?.user?.displayName || email.split('@')[0];
+      let adminName = existingDoc?.name || cred?.user?.displayName || email.split('@')[0];
+      if (adminName === 'Jauga Esau' || !adminName || adminName === 'College Librarian') {
+        adminName = 'Jauga Isuwa Samuel';
+      }
 
       const adminDoc = {
         ...(existingDoc || {}),
@@ -97,6 +101,16 @@ export function AdminLoginPage() {
 
   return (
     <div className="min-h-[85vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md mb-3 flex items-center justify-between">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-emerald-400 text-slate-700 hover:text-emerald-800 text-xs font-bold shadow-2xs transition-all hover:bg-emerald-50/50"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 text-emerald-700" />
+          <span>Back to Home</span>
+        </Link>
+      </div>
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="inline-block p-1 rounded-full bg-white shadow-xl border-2 border-emerald-600 mb-3">
           <img

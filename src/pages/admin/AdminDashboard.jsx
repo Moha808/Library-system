@@ -47,7 +47,12 @@ export function AdminDashboard() {
   useEffect(() => {
     // Automatic overdue check on dashboard mount
     handleScanOverdue(true);
-  }, []);
+
+    // Ensure admin name is set to Jauga Isuwa Samuel if set to Jauga Esau or default
+    if (currentUser?.role === 'admin' && (currentUser.name === 'Jauga Esau' || !currentUser.name || currentUser.name === 'College Librarian')) {
+      updateUserProfile({ name: 'Jauga Isuwa Samuel' });
+    }
+  }, [currentUser]);
 
   async function loadDashboardData() {
     setLoading(true);
@@ -125,7 +130,7 @@ export function AdminDashboard() {
           </div>
           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
             <p className="text-xs text-slate-600">
-              Librarian: <strong className="text-emerald-900 font-bold">{currentUser?.name || 'College Librarian'}</strong> ({currentUser?.email})
+              Librarian: <strong className="text-emerald-900 font-bold">{(currentUser?.name && currentUser?.name !== 'Jauga Esau' && currentUser?.name !== 'College Librarian') ? currentUser.name : 'Jauga Isuwa Samuel'}</strong> ({currentUser?.email})
             </p>
             {!editingName ? (
               <button
